@@ -1,0 +1,63 @@
+name: Tree-sitter parser update
+description: Update tree-sitter parser dependencies
+
+branding:
+  color: green
+  icon: chevrons-up
+
+inputs:
+  parent-name:
+    description: The parent language name (for scanner updates)
+  language-name:
+    description: The current language name (for scanner updates)
+  commit-message:
+    description: The commit message
+    default: "build: update & regenerate parser"
+  base-branch:
+    description: The base branch of the PR
+    default: ${{github.event.repository.default_branch}}
+  head-branch:
+    description: The head branch of the PR
+    default: update-parser-pr
+
+runs:
+  using: composite
+  steps:
+    - name: Update dependencies
+      uses: actions/github-script@v7
+      id: update
+      with:
+        result-encoding: string
+        script: return require('./main')({core})
+    - name: Regenerate the parser
+      shell: sh
+      run: node_modules/.bin/tree-sitter generate --no-bindings
+    - name: Update the scanner
+      if: inputs.parent-name != ''
+      shell: sh
+      run: |-
+        sed 's/tree_sitter_${{inputs.parent-name}}_/tree_sitter_${{inputs.language-name}}_/' \
+          'node_modules/tree-sitter-${{inputs.parent-name}}/src/scanner.c' > src/scanner.c
+        git diff -- src/scanner.c
+    - name: Commit changes
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: ${{inputs.commit-message}}
+        commit_author: >-
+          github-actions[bot]
+          <41898282+github-actions[bot]@users.noreply.github.com>
+        branch: ${{inputs.pr-branch}}
+        create_branch: true
+        skip_checkout: true
+        skip_fetch: true
+    - name: Create pull request
+      uses: peter-evans/create-pull-request@v6
+      with:
+        title: ${{inputs.commit-message}}
+        author: >-
+          github-actions[bot]
+          <41898282+github-actions[bot]@users.noreply.github.com>
+        body: ${{steps.update.outputs.result}}
+        branch: ${{inputs.head-branch}}
+        base: ${{inputs.base-branch}}
+        delete-branch: true

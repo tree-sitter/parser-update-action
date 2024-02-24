@@ -1,0 +1,16 @@
+{
+  "name": "@tree-sitter/parser-update-action",
+  "description": "A GitHub action for updating tree-sitter parser dependencies",
+  "repository": "tree-sitter/parser-update-action",
+  "version": "0.1.1",
+  "license": "MIT",
+  "main": "main.js",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "devDependencies": {
+    "@types/github-script": "github:actions/github-script"
+  }
+}
