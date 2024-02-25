@@ -1,5 +1,5 @@
 const { join } = require('node:path');
-const { readFileSync, writeFileSync } = require('node:fs');
+const { readFileSync } = require('node:fs');
 
 const lockfile = join(process.env.GITHUB_WORKSPACE, 'package-lock.json');
 const matcher = /.+\/(?<repo>[a-z-]+\/[a-z-]+)\.git#(?<hash>[0-9a-f]+)/;
