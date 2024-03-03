@@ -28,7 +28,7 @@ runs:
       id: update
       with:
         result-encoding: string
-        script: return (await require('./main')({core}))
+        script: return (await require('${{github.action_path}}/main')({core, exec}))
     - name: Regenerate the parser
       shell: sh
       run: node_modules/.bin/tree-sitter generate --no-bindings

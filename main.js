@@ -17,7 +17,7 @@ function getBody() {
 }
 
 /** @param {import('@types/github-script').AsyncFunctionArguments} */
-module.exports = async function({core}) {
+module.exports = async function({core, exec}) {
   core.summary.addRaw('## Old versions', true);
   core.summary.addRaw(getBody(), true).addEOL();
   await core.summary.write();
