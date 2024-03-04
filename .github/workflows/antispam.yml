@@ -1,9 +1,0 @@
-name: Close spam pull requests
-
-on:
-  pull_request:
-    types: [opened]
-
-jobs:
-  antispam:
-    uses: tree-sitter/workflows/.github/workflows/antispam.yml@main

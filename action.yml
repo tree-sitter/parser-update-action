@@ -46,7 +46,7 @@ runs:
         commit_author: >-
           github-actions[bot]
           <41898282+github-actions[bot]@users.noreply.github.com>
-        branch: ${{inputs.pr-branch}}
+        branch: ${{inputs.head-branch}}
         create_branch: true
         skip_checkout: true
         skip_fetch: true
