@@ -2,7 +2,7 @@ const { join } = require('node:path');
 const { readFileSync } = require('node:fs');
 
 const lockfile = join(process.env.GITHUB_WORKSPACE, 'package-lock.json');
-const matcher = /.+\/(?<repo>[a-z-]+\/[a-z-]+)\.git#(?<hash>[0-9a-f]+)/;
+const matcher = /.+\/(?<repo>[\w-]+\/[\w-]+)\.git#(?<hash>[0-9a-f]+)/;
 
 function getBody() {
   const { packages } = JSON.parse(readFileSync(lockfile, 'utf8'));
