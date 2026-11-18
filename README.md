@@ -1,5 +1,10 @@
 # Tree-sitter parser update
 
+> [!TIP]
+> It's recommended to use dependabot with the [regenerate workflow][] instead.
+
+[regenerate workflow]: https://github.com/tree-sitter/workflows#regenerate-workflow
+
 ## Options
 
 ```yaml
@@ -36,12 +41,12 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           cache: npm
-          node-version: 20
-      - uses: tree-sitter/parser-update-action@v1.1
+          node-version: 24
+      - uses: tree-sitter/parser-update-action@v1.2
         with:
           parent-name: c
           language-name: cpp
